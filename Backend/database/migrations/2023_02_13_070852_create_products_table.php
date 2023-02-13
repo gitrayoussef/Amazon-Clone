@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_address', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('address_line1');
-            $table->string('address_line2');
-            $table->string('city');
-            $table->string('postal_code');
-            $table->string('country');
-            $table->string('telephone');
-            $table->string('mobile');
+            $table->string('name')->unique();
+            $table->text('desc');
+            $table->foreignId('category_id')->constrained('product_categories');
+            $table->foreignId('inventory_id')->constrained('product_inventories');
+            $table->decimal('price');
+            $table->foreignId('discount_id')->constrained('discounts');
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_address');
+        Schema::dropIfExists('product');
     }
 };

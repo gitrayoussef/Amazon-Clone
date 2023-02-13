@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_inventory', function (Blueprint $table) {
+        Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('session_id')->constrained('shopping_sessions');
+            $table->foreignId('product_id')->constrained();
             $table->integer('quantity');
             $table->timestamps();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_inventory');
+        Schema::dropIfExists('cart_item');
     }
 };
