@@ -1,0 +1,107 @@
+< ------------------------------------------------- LINKS TO READ AND WATCH  ------------------------------------------------- >
+
+<< Refrence Playlists
+
+1 - https://www.youtube.com/watch?v=2OgfE418MXU&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb
+
+<<Reference Links 
+
+Ready HTML Bootstrap Template ->https://themewagon.com/theme-tag/ecommerce-template/
+video https://www.youtube.com/watch?v=2OgfE418MXU&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=3
+
+Admin Dashboard ->https://github.com/BootstrapDash/corona-free-dark-bootstrap-admin-template
+video https://www.youtube.com/watch?v=k18yXHHcDPM&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=4
+
+Strip Payement Gateaway ->https://www.itsolutionstuff.com/post/laravel-9-stripe-payment-gateway-integration-tutorialexample.html
+video https://www.youtube.com/watch?v=rkyZQkPlJBY&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=15
+
+Print order receipt ->#printpdfinlaravel
+ https://www.youtube.com/watch?v=QJLmkukiSBY&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=18
+
+Email verification ->
+video https://www.youtube.com/watch?v=_vsWdo7WnSI&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=19
+
+Email Notification ->
+video https://www.youtube.com/watch?v=WI5dHACiOjQ&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=20
+
+Comments->
+video https://www.youtube.com/watch?v=lMWSP827r7s&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=24
+------------------------------------------------------------------------------------------------------------------------------------------------------
+<< Refrence Playlists
+
+2 - https://www.youtube.com/watch?v=xfSks-NdHPw&list=PLz_YkiqIHesvPtvLl2Wz5FtuW44dBt199
+
+<<Reference Links 
+
+Ready HTML Bootstrap Template ->https://github.com/surfsidemedia/Laravel-8-E-Commerce
+video https://www.youtube.com/watch?v=2OgfE418MXU&list=PLm8sgxwSZofdIdWQxDhg3HUplNJIZRjqb&index=3
+
+Best Playlist Till Now
+------------------------------------------------------------------------------------------------------------------------------------------------------
+<< Refrence Playlists
+
+3 - https://www.youtube.com/watch?v=oi4mQbTpiQM&list=PL_99hMDlL4d3-n63bsNaaDRnTZdCOvU6q
+
+<<Reference Links 
+
+LiveChat -> https://www.youtube.com/watch?v=oi4mQbTpiQM&list=PL_99hMDlL4d3-n63bsNaaDRnTZdCOvU6q&index=40
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+<< Refrence Playlists
+
+4- https://www.youtube.com/watch?v=sHoPSlOr8Yk&list=PLf5ATZslqO1edcm1PHDnxivfOVMudzTW7
+
+<<Reference Links 
+
+Shippment -> https://www.youtube.com/watch?v=Bz7vyj3ZxN8&list=PLf5ATZslqO1edcm1PHDnxivfOVMudzTW7&index=21
+------------------------------------------------------------------------------------------------------------------------------------------------------
+<< Refrence Playlists
+
+5-https://www.youtube.com/watch?v=MMDjihgFk-8&list=PLC2zPvA4xRS4JYwY5u0EkWivPIS7sWdlt&index=2(angluar)
+
+Vs:extensions
+PHP Intelephense
+Darcula IntelliJ Theme
+GitHub Copilot
+Laravel Blade formatter
+Laravel Blade Snippet
+laravel intellisense
+PHP Constructor
+PHP Create Class
+php cs fixer
+PHP Namespace Resolver
+phpfmt - PHP formatter
+Prettier - Code formatter
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Commands
+
+- Composer create-project laravel/laravel <project-name>
+-ng new <folder-name>(frontend)
+-Edit Database name
+-php artisan migrate
+-php arisan make resource
+-proxy angular
+
+Database schema
+https://fabric.inc/wp-content/uploads/hubspot/ecommerce-platform-data-1.png
+
+
+API
+https://www.youtube.com/watch?v=w4NX6Y4owWs&t=1871s
+https://www.youtube.com/watch?v=ZlkSqIZ-D-E
+
+
+
+1- Task 1 -> Preparing The Enviroment with migration
+2- Task2 -> APIS (Team Backend) with Authentication and Authrization Scantum 
+               -> Required Logic for payement method and shopping cart and shippment 
+https://laravel.com/docs/9.x/sanctum#protecting-mobile-api-routes
+https://laravel.com/docs/9.x/sanctum#token-expiration
+3- Task3-> Show , create , index , delete (Team Front)
+
+
+
+
+
+
+
