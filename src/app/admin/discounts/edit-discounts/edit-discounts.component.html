@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-center container-fluid">
+        <form class="w-100 m-3" [formGroup]="editDiscount" (ngSubmit)="onSubmit()">
+            <div class="mb-3 row">
+                <div class="col-2">
+                    <label for="discountName" class="form-label">Name</label>
+                </div>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="discountName" fdprocessedid="k63lp"
+                        formControlName="name" *ngIf="discount" value="{{discount.name}}" />
+                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !nameValid">
+                        <sup>*</sup>Please provide discount name
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-2">
+                    <label for="description" class="form-label">Description</label>
+                </div>
+                <div class="col-10">
+                    <textarea class="form-control" id="description" rows="3" *ngIf="discount"
+                        formControlName="desc">{{discount.desc}}</textarea>
+                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !descValid">
+                        <sup>*</sup>Please provide discount description
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-2">
+                    <label for="percent" class="form-label">Percent</label>
+                </div>
+                <div class="col-10">
+                    <input type="number" class="form-control" id="percent" fdprocessedid="k63lp"
+                        formControlName="percent" />
+                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !percentValid">
+                        <sup>*</sup>Please provide discount percent
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-2">
+                    <label for="active" class="form-label">Active</label>
+                </div>
+                <div class="col-10">
+                    <div class="form-check">
+                        <input checked class="form-check-input" id="flexRadioDefault1" type="radio" value='true'
+                            formControlName="active" (change)="radioButtonChangeHandler($event)"  [checked]="discount && discount['active'] == 'true'">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            True
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" id="flexRadioDefault2" type="radio" value='false'
+                            formControlName="active" (change)="radioButtonChangeHandler($event)"  [checked]="discount && discount['active'] == 'false'">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            False
+                        </label>
+                    </div>
+                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !activeValid">
+                        <sup>*</sup>Please provide discount status
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    routerLink="/admin/discounts">Cancel</button>
+                <button type="submit" class="btn btn-primary">Edit Discount</button>
+            </div>
+        </form>
+    </div>
+</div>

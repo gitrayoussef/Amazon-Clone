@@ -16,26 +16,37 @@
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.css"
+              "./src/assets/css/animate.css",
+              "./src/assets/css/font-awesome.min.css",
+              "./src/assets/css/bootstrap.min.css",
+              "./node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+              "./node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+              "./src/assets/css/chosen.min.css",
+              "./src/assets/css/style.css",
+              "./src/assets/css/color-01.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./src/assets/js/jquery-1.12.4.minb8ff.js",
+              "./src/assets/js/jquery-ui-1.12.4.minb8ff.js",
+              "./src/assets/js/bootstrap.min.js",
+              "./src/assets/js/jquery.flexslider.js",
+              "./src/assets/js/chosen.jquery.min.js",
+              "./src/assets/js/jquery.countdown.min.js",
+              "./src/assets/js/jquery.sticky.js",
+              "./src/assets/js/functions.js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -77,22 +88,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

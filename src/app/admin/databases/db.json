@@ -1,0 +1,117 @@
+{
+  "categories": [
+    {
+      "name": "Clothes",
+      "desc": "Clothes category for modern outfits",
+      "image": {},
+      "id": 1
+    },
+    {
+      "id": 2,
+      "name": "beauty",
+      "desc": "beauty descrpition"
+    },
+    {
+      "name": "Phones",
+      "desc": "Phones Category including all types of phones",
+      "image": {},
+      "id": 3
+    },
+    {
+      "name": "Powerbanks",
+      "desc": "Powerbank for our phone",
+      "image": {},
+      "id": 4
+    }
+  ],
+  "inventories": [
+    {
+      "id": 1,
+      "quantity": "6"
+    },
+    {
+      "id": 2,
+      "quantity": "8"
+    },
+    {
+      "quantity": "2",
+      "id": 3
+    },
+    {
+      "quantity": "10",
+      "id": 4
+    }
+  ],
+  "discounts": [
+    {
+      "name": "godiscount",
+      "desc": "go discount provided by google",
+      "percent": "20",
+      "active": "false",
+      "id": 1
+    },
+    {
+      "name": "comechild",
+      "desc": "come child for children under 3 years",
+      "percent": "60",
+      "active": "true",
+      "id": 2
+    },
+    {
+      "name": "amz",
+      "desc": "New discount for blackfriday",
+      "percent": "10",
+      "active": "true",
+      "id": 3
+    },
+    {
+      "name": "meza",
+      "desc": "meza discount provided by meza credit card",
+      "percent": "10",
+      "active": "false",
+      "id": 4
+    }
+  ],
+  "products": [
+    {
+      "name": "Jupe for women",
+      "desc": "long skirt with scattered diamonds",
+      "categoryId": "1",
+      "inventoryId": "1",
+      "price": "20",
+      "discountId": "2",
+      "image": "undefined",
+      "id": 4
+    },
+    {
+      "name": "Red Blouse For Women",
+      "desc": "Red Blouse with white strip in the middle",
+      "categoryId": "1",
+      "inventoryId": "2",
+      "price": "36",
+      "discountId": "4",
+      "image": "undefined",
+      "id": 5
+    },
+    {
+      "name": "IPhone x6 new release",
+      "desc": "IPhone x6 new release  to your backpack",
+      "categoryId": "3",
+      "inventoryId": "2",
+      "price": "1200",
+      "discountId": "1",
+      "image": "undefined",
+      "id": 6
+    },
+    {
+      "name": "IPhone x6 new release s",
+      "desc": "New Iphone realse sd",
+      "categoryId": "3",
+      "inventoryId": "2",
+      "price": "4355",
+      "discountId": "3",
+      "image": "undefined",
+      "id": 7
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+    "/products/search/:product": "/products?q=:product",
+    "/products/search/categories/:category": "/products?categoryId=:category"
+  }
