@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Category } from 'src/app/interface/category';
 import { Discount } from 'src/app/interface/discount';
 import { Inventory } from 'src/app/interface/inventory';
@@ -11,12 +11,16 @@ import { Product } from 'src/app/interface/product';
 })
 export class ProductService {
   private apiUrl = 'http://localhost:8000';
+  subjectNotifier: Subject<any> = new Subject<any>();
+  private _refreshComp = new Subject<void>();
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     // 'Authorization': 'Bearer /* YOUR_TOKEN_HERE */',
   });
   constructor(private http: HttpClient) {}
-
+  notifyAboutChange(data:any) {
+    this.subjectNotifier.next(data);
+  }
   // Products Service
   getProduct(id: string | number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/api/products/${id}`);

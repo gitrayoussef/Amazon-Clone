@@ -8,7 +8,6 @@ import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { IndexComponent } from './index/index.component';
@@ -16,11 +15,11 @@ import { RouterModule } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OrderComponent } from './order/order.component';
 import { CartComponent } from './cart/cart.component';
-
-
-
-
-
+import { CategoryComponent } from './category/category.component';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { DetailComponent } from './detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -29,12 +28,14 @@ import { CartComponent } from './cart/cart.component';
     RegisterComponent,
     NavbarComponent,
     FooterComponent,
-    HomeComponent,
     ResetPasswordComponent,
     ForgetPasswordComponent,
     IndexComponent,
     OrderComponent,
-    CartComponent
+    CartComponent,
+    CategoryComponent,
+    SidebarComponent,
+    DetailComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +43,9 @@ import { CartComponent } from './cart/cart.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    CarouselModule 
+    CarouselModule,
+    NgbModule,
+    NgxSliderModule
   ],
 })
 export class DefaultModule {

@@ -1,0 +1,175 @@
+<!--main area-->
+<main id="main" class="main-site left-sidebar">
+    <div class="container">
+
+        <div class="wrap-breadcrumb">
+            <ul>
+                <li class="item-link"><a href="#" class="link">home</a></li>
+                <li class="item-link"><span>{{categoryName}}</span></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
+
+                <div class="banner-shop">
+                    <a href="#" class="banner-link">
+                        <figure><img src="assets/images/shop-banner.jpg" alt=""></figure>
+                    </a>
+                </div>
+
+                <div class="wrap-shop-control">
+
+                    <h1 class="shop-title">{{categoryName}}</h1>
+
+                    <div class="wrap-right">
+
+                        <div class="sort-item orderby ">
+                            <select name="orderby" class="use-chosen">
+                                <option value="menu_order" selected="selected">Default sorting</option>
+                                <option value="popularity">Sort by popularity</option>
+                                <option value="rating">Sort by average rating</option>
+                                <option value="date">Sort by newness</option>
+                                <option value="price">Sort by price: low to high</option>
+                                <option value="price-desc">Sort by price: high to low</option>
+                            </select>
+                        </div>
+
+                        <div class="sort-item product-per-page">
+                            <select name="post-per-page" class="use-chosen">
+                                <option value="8" selected="selected">8 per page</option>
+                                <option value="12">12 per page</option>
+                            </select>
+                        </div>
+
+                        <div class="change-display-mode">
+                            <a href="#" class="grid-mode display-mode active"><i class="fa fa-th"></i>Grid</a>
+                            <a href="#" class="list-mode display-mode"><i class="fa fa-th-list"></i>List</a>
+                        </div>
+
+                    </div>
+
+                </div><!--end wrap shop control-->
+
+                <div class="row">
+
+                    <ul class="product-list grid-products equal-container">
+
+                        <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6" *ngFor="let product of filterProductByPrice">
+                            <div class="product product-style-3 equal-elem">
+                                <div class=" product-thumnail">
+                                    <a href="detail.html" title="{{product['attributes'].name}}">
+                                        <figure><img src="{{product['attributes'].imagepath}}"
+                                                alt="{{product['attributes'].name}}"></figure>
+                                    </a>
+                                </div>
+                                <div class="product-info">
+                                    <a href="#" class="product-name"><span>{{product['attributes'].name}}</span></a>
+                                    <ngb-rating [max]="5" [(rate)]="product['attributes'].rating"
+                                        [readonly]="true"></ngb-rating>
+                                    <div class="wrap-price" *ngIf="product['attributes'].Discount != null">
+                                        <span class="product-price">${{((product['attributes'].price) -
+                                            ((product['attributes'].price)*(product['attributes'].Discount['attributes'].discount_percent)/100)).toFixed(2)}}
+                                        </span>
+                                        <span style="color: red; margin-left:20px;" class="product-price"><del>${{product['attributes'].price}}</del></span>
+                                    </div>
+                                    <div class="wrap-price" *ngIf="product['attributes'].Discount === null">
+                                        <span class="product-price">${{product['attributes'].price}}</span>
+                                    </div>
+                                    <!-- <div class="wrap-price"><span class="product-price">$250.00</span></div> -->
+                                    <a href="#" class="btn add-to-cart">Add To Cart</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="wrap-pagination-info">
+                    <ul class="page-numbers">
+                        <li *ngFor="let page of pagesNumber" (click)="goToPage(page)"><span class="page-number-item"
+                                [class.current]="page ==  pageNumber">{{page}}</span></li>
+                    </ul>
+                    <p class="result-count">Showing {{currentPageBeginIndex}}-{{currentPageEndIndex}} of
+                        {{totalProductsNumber}} result</p>
+                </div>
+            </div><!--end main products area-->
+
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 sitebar">
+                <div class="widget mercado-widget categories-widget">
+                    <h2 class="widget-title">All Categories</h2>
+                    <div class="widget-content">
+                        <ul class="list-category">
+                            <li class="category-item has-child-cate">
+                                <a class="cate-link" *ngFor="let category of filteredCategories"
+                                    (click)="valueSelected(category['Category-id'],category['attributes'].name,1)">{{category['attributes'].name}}</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div><!-- Categories widget-->
+
+                <div class="widget mercado-widget filter-widget price-filter">
+                    <h2 class="widget-title">Price</h2>
+                    <div class="widget-content">
+                        <div class="custom-slider">
+                            <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
+                        </div>
+                        <div class="amount-container">
+                            <div class="amount-left">
+                                <span class="amount-label">Price:</span>
+                                <div class="amount-price">
+                                    <span>$</span><input type="text" class="amount" [(ngModel)]="minValue" readonly>
+                                    <span>-</span>
+                                    <span>$</span><input type="text" class="amount" [(ngModel)]="maxValue" readonly>
+                                </div>
+                            </div>
+                            <div class="amount-left">
+                                <button class="filter-submit" (click)="getFilterByPriceValue()">Filter</button>
+                                <button style="margin-left: 15px;" class="filter-submit" (click)="refresh()"><i
+                                        class="fa fa-refresh"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- Price-->
+
+                <div class="widget mercado-widget widget-product">
+                    <h2 class="widget-title">Popular Products</h2>
+                    <div class="widget-content">
+                        <ul class="products">
+                            <li class="product-item" *ngFor="let product of filterProductByRating">
+                                <div class="product product-widget-style">
+                                    <div class="thumbnnail">
+                                        <a href="detail.html" title="{{product['attributes'].name}}">
+                                            <figure><img src="{{product['attributes'].imagepath}}" alt=""></figure>
+                                        </a>
+                                    </div>
+                                    <div class="product-info">
+                                        <a href="#" class="product-name"><span>{{product['attributes'].name}}</span></a>
+                                        <div class="wrap-price" *ngIf="product['attributes'].Discount != null">
+                                            <ins>
+                                                <p class="product-price">${{((product['attributes'].price) -
+                                                    ((product['attributes'].price)*(product['attributes'].Discount['attributes'].discount_percent)/100)).toFixed(2)}}
+                                                </p>
+                                            </ins> <del>
+                                                <p class="product-price">${{product['attributes'].price}}</p>
+                                            </del>
+                                        </div>
+                                        <div class="wrap-price" *ngIf="product['attributes'].Discount === null">
+                                            <span class="product-price">${{product['attributes'].price}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- brand widget-->
+
+            </div><!--end sitebar-->
+
+        </div><!--end row-->
+
+    </div><!--end container-->
+
+</main>
+<!--main area-->

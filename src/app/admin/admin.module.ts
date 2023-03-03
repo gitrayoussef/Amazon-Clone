@@ -16,6 +16,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { InventoriesComponent } from './inventories/inventories.component';
 import { EditDiscountsComponent } from './discounts/edit-discounts/edit-discounts.component';
+import { NewProductComponent } from './products/new-product/new-product.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { EditDiscountsComponent } from './discounts/edit-discounts/edit-discount
     DiscountsComponent,
     InventoriesComponent,
     EditDiscountsComponent,
+    NewProductComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule , Ng2SearchPipeModule],
 })

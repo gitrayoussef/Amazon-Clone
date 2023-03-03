@@ -10,7 +10,7 @@ import { Product } from 'src/app/interface/product';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:8000';
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     // 'Authorization': 'Bearer /* YOUR_TOKEN_HERE */',
@@ -19,7 +19,7 @@ export class ProductService {
 
   // Products Service
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/products`);
+    return this.http.get<Product[]>(`${this.apiUrl}/api/products`);
   }
   getProduct(id: string | number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products/${id}`);
@@ -47,7 +47,7 @@ export class ProductService {
   }
   // Gategories Service
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/categories`);
+    return this.http.get<Category[]>(`${this.apiUrl}/api/categories`);
   }
   getCategory(id: string | number): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}/categories/${id}`);
@@ -83,7 +83,7 @@ export class ProductService {
   }
   // Discounts Service
   getDiscounts(): Observable<Discount[]> {
-    return this.http.get<Discount[]>(`${this.apiUrl}/discounts`);
+    return this.http.get<Discount[]>(`${this.apiUrl}/api/Discount`);
   }
   getDiscount(id: string | number): Observable<Discount[]> {
     return this.http.get<Discount[]>(`${this.apiUrl}/discounts/${id}`);

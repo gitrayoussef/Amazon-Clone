@@ -11,12 +11,13 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 export class IndexComponent implements OnInit {
   customOptions: OwlOptions = {
     loop: false,
+    autoplay: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
     dots: false,
     navSpeed: 700,
-    navText: ['', ''],
+    navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
     responsive: {
       0: {
         items: 1,
@@ -37,16 +38,17 @@ export class IndexComponent implements OnInit {
         items: 6,
       },
     },
-    nav: false,
+    nav: true,
   };
   bannerOptions: OwlOptions = {
     loop: true,
+    autoplay: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
     dots: false,
     navSpeed: 700,
-    navText: ['', ''],
+    navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>' ],
     responsive: {
       0: {
         items: 1,
@@ -65,12 +67,13 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+  ) { 
+   
+  }
   ngOnInit(): void {
     this.onGetCategories();
     this.getProducts(this.url, this.products);
-    this.onGetInventories();
     this.onGetDiscounts();
   }
   getProducts(url: string, products: any[]) {
@@ -85,7 +88,7 @@ export class IndexComponent implements OnInit {
       }
       this.products = products;
       this.onGetProductsOnSale();
-      this.onGetLatestProductsByMonth();
+      this.onGetLatestProductsByMonth();     
       this.showProductsByCategoryOnLoad();
     });
   }
@@ -93,17 +96,6 @@ export class IndexComponent implements OnInit {
     this.productService.getCategories().subscribe({
       next: (response: any) => {
         this.categories = response['data'];
-      },
-      error: (error: any) => {
-        console.log(error.message);
-      },
-    });
-  }
-
-  onGetInventories(): void {
-    this.productService.getInventories().subscribe({
-      next: (response: any) => {
-        this.inventories = response['data'];
       },
       error: (error: any) => {
         console.log(error.message);
@@ -140,7 +132,7 @@ export class IndexComponent implements OnInit {
       let creationMonth = new Date(product['attributes'].created_at).getMonth();
       let updateMonth = new Date(product['attributes'].updated_at).getMonth();
       let currentMonth = new Date(Date.now()).getMonth();
-      if (creationMonth === currentMonth || updateMonth === currentMonth) {
+      if (creationMonth <= currentMonth - 1 || updateMonth <= currentMonth - 1) {
         this.latestProducts.push(product);
       }
     }
@@ -156,11 +148,13 @@ export class IndexComponent implements OnInit {
   }
   showProductsByCategoryOnLoad() {
     for (let product of this.products) {
-      let categoryName = this.categories[0]['attributes'].name;
-      let productCategory = product['attributes'].Category['attributes'].name;
-      if (productCategory === categoryName) {
-        this.productsCollectionByCategory.push(product);
-      }
+      if(this.categories) {
+        let categoryName = this.categories[0]['attributes'].name;
+        let productCategory = product['attributes'].Category['attributes'].name;
+        if (productCategory === categoryName) {
+          this.productsCollectionByCategory.push(product);
+        }
+      }  
     }
   }
 }

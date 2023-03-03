@@ -7,6 +7,7 @@ import { DiscountsComponent } from './discounts/discounts.component';
 import { EditDiscountsComponent } from './discounts/edit-discounts/edit-discounts.component';
 import { InventoriesComponent } from './inventories/inventories.component';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
+import { NewProductComponent } from './products/new-product/new-product.component';
 import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'products/:id/edit',
         component: EditProductComponent,
+      },
+      {
+        path: 'products/new',
+        component: NewProductComponent,
       },
       {
         path: 'categories',

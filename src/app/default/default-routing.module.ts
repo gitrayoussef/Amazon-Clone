@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AfterLoginService } from '../services/after-login.service';
 import { BeforeLoginService } from '../services/before-login.service';
 import { DefaultComponent } from './default.component';
+import { DetailComponent } from './detail/detail.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { HomeComponent } from './home/home.component';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 const routes: Routes = [
   {
@@ -38,9 +39,13 @@ const routes: Routes = [
         component: IndexComponent,
       },
       {
-        path: '**',
-        component: IndexComponent,
+        path: 'categories/:id/:categoryName/page/:pageNumber',
+        component: SidebarComponent,
       },
+      {
+        path: 'products/:id',
+        component: DetailComponent,
+      }
     ],
   },
 ];
