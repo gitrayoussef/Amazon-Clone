@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/interface/category';
-import { ProductService } from '../services/product.service';
+import { ProductService } from '../../services/product.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { __values } from 'tslib';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css'],
+  selector: 'app-new-category',
+  templateUrl: './new-category.component.html',
+  styleUrls: ['./new-category.component.css'],
 })
-export class CategoriesComponent implements OnInit {
+export class NewCategoryComponent {
   isSubmitted = false;
   categories: any;
   filteredCategories: any;
@@ -35,7 +35,7 @@ export class CategoriesComponent implements OnInit {
       Validators.required,
       Validators.maxLength(255),
       Validators.minLength(20),
-    ])
+    ]),
   });
 
   ngOnInit(): void {
@@ -44,9 +44,9 @@ export class CategoriesComponent implements OnInit {
 
   onGetCategories(): void {
     this.productService.getCategories().subscribe({
-      next: (response:any) => {
+      next: (response: any) => {
         this.categories = response['data'];
-        this.filteredCategories =response['data'];
+        this.filteredCategories = response['data'];
       },
       error: (error: any) => {
         alert(error.message);
@@ -63,10 +63,8 @@ export class CategoriesComponent implements OnInit {
   valueSelected() {
     this.categories = this.filteredCategories;
     this.categories = this.categories.filter(
-      (category: any) =>
-       category['attributes'].name ==
-        this.selectedCategory
-    );        
+      (category: any) => category['attributes'].name == this.selectedCategory
+    );
   }
   refreshComponent() {
     this.ngOnInit();
@@ -79,28 +77,15 @@ export class CategoriesComponent implements OnInit {
       const newCategoryFormData: any = new FormData();
       newCategoryFormData.append('name', this.newCategory.get('name')?.value);
       newCategoryFormData.append('desc', this.newCategory.get('desc')?.value);
-      const formDataObj: any = Object.fromEntries(newCategoryFormData.entries());
-      this.productService.createCategory(formDataObj).subscribe({
+      this.productService.createCategory(newCategoryFormData).subscribe({
         next: (response) => {
-          this.successMessage = `Great, Product deleted successfully!`;
-          this.ngOnInit();
+          this.successMessage = `Great, Category created successfully!`;
+          this.router.navigateByUrl('/admin/categories')
         },
         error: (error: any) => {
           this.errorMessage = `OPPS!! ${error.message}`;
         },
       });
     }
-  }
-
-  onDelete(id: number) {
-    this.productService.deleteCategory(id).subscribe({
-      next: (response) => {
-        this.successMessage = `Great, Product deleted successfully!`;
-          this.ngOnInit();
-      },
-      error: (error: any) => {
-        this.errorMessage = `OPPS!! ${error.message}`;
-      },
-    });
   }
 }

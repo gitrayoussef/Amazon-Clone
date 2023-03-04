@@ -17,6 +17,9 @@ import { DiscountsComponent } from './discounts/discounts.component';
 import { InventoriesComponent } from './inventories/inventories.component';
 import { EditDiscountsComponent } from './discounts/edit-discounts/edit-discounts.component';
 import { NewProductComponent } from './products/new-product/new-product.component';
+import { LoginComponent } from './login/login.component';
+import { NewCategoryComponent } from './categories/new-category/new-category.component';
+import { NewDiscountComponent } from './discounts/new-discount/new-discount.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import { NewProductComponent } from './products/new-product/new-product.componen
     InventoriesComponent,
     EditDiscountsComponent,
     NewProductComponent,
+    LoginComponent,
+    NewCategoryComponent,
+    NewDiscountComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule , Ng2SearchPipeModule],
 })

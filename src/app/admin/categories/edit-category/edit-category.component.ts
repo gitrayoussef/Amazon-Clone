@@ -13,11 +13,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditCategoryComponent implements OnInit {
   isSubmitted = false;
-  imageName: any;
-  imgFile: any;
   categoryId: number = 0;
   category!: any;
-  categories: Category[] = [];
+  categories: any;
+  successMessage: any;
+  errorMessage: any;
   editCategory = this.fb.group({
     name: new FormControl('', [
       Validators.required,
@@ -29,7 +29,6 @@ export class EditCategoryComponent implements OnInit {
       Validators.maxLength(255),
       Validators.minLength(20),
     ]),
-    image: new FormControl(null, [Validators.required]),
   });
 
   constructor(
@@ -45,11 +44,10 @@ export class EditCategoryComponent implements OnInit {
   onGetCategory(): void {
     this.categoryId = this.myActivated.snapshot.params['id'];
     this.productService.getCategory(this.categoryId).subscribe({
-      next: (response) => {
-        this.category = response;
-        this.editCategory.controls['name'].setValue(this.category['name']);
-        this.editCategory.controls['desc'].setValue(this.category['desc']);
-        this.editCategory.controls['image'].setValue(this.category['image']);
+      next: (response:any) => {
+        this.category = response['data'];
+        this.editCategory.controls['name'].setValue(this.category['attributes'].name);
+        this.editCategory.controls['desc'].setValue(this.category['attributes'].desc);
       },
       error: (error: any) => {
         alert(error.message)
@@ -63,16 +61,6 @@ export class EditCategoryComponent implements OnInit {
   get descValid() {
     return this.editCategory.controls['desc'].valid;
   }
-  get imageValid() {
-    return this.editCategory.controls['image'].valid;
-  }
-  onSelectImage(event: any): void {
-    this.imgFile = event.target.files[0];
-    this.editCategory.patchValue({
-      image: this.imgFile,
-    });
-    this.imageName = this.imgFile.name;
-  }
 
   onSubmit(): void {
     if (!this.editCategory.valid) {
@@ -81,26 +69,17 @@ export class EditCategoryComponent implements OnInit {
     if (this.editCategory.valid) {
       const newCategoryFormData: any = new FormData();
       newCategoryFormData.append('name', this.editCategory.get('name')?.value);
-      newCategoryFormData.append('desc', this.editCategory.get('desc')?.value);
-      newCategoryFormData.append('image', this.imgFile);
-      const formDataObj: any = Object.fromEntries(newCategoryFormData.entries());
-      console.log(formDataObj);
-      
+      newCategoryFormData.append('desc', this.editCategory.get('desc')?.value);  
+      const formDataObj: any = Object.fromEntries(
+        newCategoryFormData.entries()
+      );
       this.productService.updateCategory(this.categoryId, formDataObj).subscribe({
         next: (response) => {
-          this.toaster.success(
-            'Category have been edited successfully',
-            'Great Job!',
-            {
-              timeOut: 3000,
-            }
-          );
+          this.successMessage = `Great, Category updated successfully!`;
           this.router.navigate(['admin/categories']);
         },
         error: (error: any) => {
-          this.toaster.error(error.message, 'OOPS!', {
-            timeOut: 3000,
-          });
+          this.errorMessage = `OPPS!! ${error.message}`;
         },
       });
     }

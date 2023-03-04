@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ElementRef, NgModule, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DefaultRoutingModule } from './default-routing.module';
@@ -49,5 +49,5 @@ import { DetailComponent } from './detail/detail.component';
   ],
 })
 export class DefaultModule {
- 
+  
 }

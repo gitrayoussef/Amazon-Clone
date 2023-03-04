@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
 import { ProductService } from 'src/app/services/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,9 +11,18 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  public loggedIn: boolean = false;
+  public loggedIn!: boolean;
   public categories: any = [];
   public filteredCategories: any = [];
+  public cartItems:any;
+  notifierSubscription: Subscription =
+  this.productService.cartNotifier.subscribe((notified) => {
+   this.cartItems = notified;
+   console.log(this.cartItems);
+  console.log(notified);
+  
+   
+  });
 
   constructor(
     private authService: AuthService,
@@ -22,6 +32,9 @@ export class NavbarComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.authService.authStatus.subscribe((value) => (this.loggedIn = value));
+    if (localStorage.getItem('token')) {
+      this.loggedIn = true;
+    }
     this.onGetCategories();
   }
 
@@ -45,10 +58,11 @@ export class NavbarComponent implements OnInit {
   }
 
   valueSelected(categoryId: any, categoryName: any) {
-      this.router.navigateByUrl(
-        `/categories/${categoryId}/${categoryName}/page/1`
-      );
-      this.productService.notifyAboutChange({categoryId , categoryName});
+    this.router.navigateByUrl(
+      `/categories/${categoryId}/${categoryName}/page/1`
+    );
+    this.productService.notifyAboutChange({ categoryId, categoryName });
   }
 
+  
 }

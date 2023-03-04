@@ -1,15 +1,13 @@
 <div class="card card-primary card-outline p-2">
     <div class="card-header">
         <h3 class="card-title">Search</h3>
-        <div class="card-tools d-flex gap-2 w-50">
-            <div class="input-group input-group-sm">
-                <input id="searchProductInput" type="text" class="form-control" placeholder="Search discount"
-                    fdprocessedid="0gx4l" name="percent" [(ngModel)]="searchDiscount">
-            </div>
-            <div class="input-group input-group-sm">
-                <select class="form-select" [(ngModel)]="selectedDiscount" (change)="valueSelected()">
-                    <option *ngFor="let discount of filteredDiscounts" [ngValue]="discount.name" [selected]="1">
-                        {{discount.name}}</option>
+        <div class="card-tools d-flex flex-self-start gap-2 ">
+            <div  class="input-group input-group-sm ">
+                <span style="margin-right: 15px;">Search Discount:</span>
+                <select *ngIf="filteredDiscounts" class="form-select" [(ngModel)]="selectedDiscount" (change)="valueSelected()">
+                    <option *ngFor="let discount of filteredDiscounts" [ngValue]="discount['attributes'].name"
+                        [selected]="1">
+                        {{discount['attributes'].name}}</option>
                 </select>
             </div>
         </div>
@@ -19,7 +17,7 @@
     <div class="card-body p-0">
         <div class="mailbox-controls">
             <button type="button" class="btn btn-default btn-sm" fdprocessedid="33yis" data-bs-toggle="modal"
-                data-bs-target="#addModal">
+                routerLink="/admin/discounts/new">
                 <i class="fa fa-plus-circle me-2"></i>Add New Discount
             </button>
             <button type="button" class="btn btn-default btn-sm" fdprocessedid="yuhkw">
@@ -40,6 +38,12 @@
 
         </div>
         <div class="table-responsive mailbox-messages">
+            <fieldset class="alert alert-danger" *ngIf="errorMessage">
+                {{errorMessage}}
+            </fieldset>
+            <fieldset class="alert alert-success" *ngIf="successMessage">
+                {{successMessage}}
+            </fieldset>
             <table class="table table-hover table-striped">
                 <tbody>
                     <tr>
@@ -51,18 +55,22 @@
                         <th>Tools</th>
                     </tr>
                     <tr *ngFor="let discount of discounts | filter : searchDiscount">
-                        <td>{{discount.id}}</td>
-                        <td>{{discount.name}}</td>
-                        <td>{{discount.desc}}</td>
-                        <td>{{discount.percent}}%</td>
-                        <td>{{discount.active}}</td>
+                        <td>{{discount['Discount-id']}}</td>
+                        <td>{{discount['attributes'].name}}</td>
+                        <td>{{discount['attributes'].desc}}</td>
+                        <td>{{discount['attributes'].discount_percent}}%</td>
+                        <td *ngIf="discount['attributes'].active == 1">
+                            True</td>
+                            <td *ngIf="discount['attributes'].active != 1">
+                                False</td>
                         <td class="d-flex">
                             <a class="btn btn-default btn-sm" fdprocessedid="t404js"
-                                routerLink="/admin/discounts/{{discount.id}}/edit">
+                                routerLink="/admin/discounts/{{discount['Discount-id']}}/edit">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <button type="button" class="btn btn-default btn-sm" fdprocessedid="t404js">
-                                <i class="fas fa-trash" *ngIf="discount.id" (click)="onDelete(discount.id)"></i>
+                                <i class="fas fa-trash" *ngIf="discount['Discount-id']"
+                                    (click)="onDelete(discount['Discount-id'])"></i>
                             </button>
                         </td>
                     </tr>
@@ -86,91 +94,6 @@
                     </button>
                 </div>
 
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- Modal For adding Product -->
-
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Discount</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-center container-fluid">
-                        <form class="w-100 m-3" [formGroup]="newDiscount" (ngSubmit)="onSubmit()">
-                            <div class="mb-3 row">
-                                <div class="col-2">
-                                    <label for="categoryName" class="form-label">Name</label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" class="form-control" id="categoryName" fdprocessedid="k63lp"
-                                        formControlName="name" />
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !nameValid">
-                                        <sup>*</sup>Please provide discount name
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-2">
-                                    <label for="description" class="form-label">Description</label>
-                                </div>
-                                <div class="col-10">
-                                    <textarea class="form-control" id="description" rows="3"
-                                        formControlName="desc"></textarea>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !descValid">
-                                        <sup>*</sup>Please provide discount description
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-2">
-                                    <label for="percent" class="form-label">Percent</label>
-                                </div>
-                                <div class="col-10">
-                                    <input type="number" class="form-control" id="percent" fdprocessedid="k63lp"
-                                        formControlName="percent" />
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !percentValid">
-                                        <sup>*</sup>Please provide discount percent
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-2">
-                                    <label for="active" class="form-label">Active</label>
-                                </div>
-                                <div class="col-10">
-                                    <div class="form-check">
-                                        <input checked class="form-check-input" id="flexRadioDefault1" type="radio" value='true' formControlName="active"
-                                            (change)="radioButtonChangeHandler($event)">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            True
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" id="flexRadioDefault2" type="radio" value='false' formControlName="active"
-                                            (change)="radioButtonChangeHandler($event)">
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            False
-                                        </label>
-                                    </div>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !activeValid">
-                                        <sup>*</sup>Please provide discount status
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Add Discount</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
         </div>

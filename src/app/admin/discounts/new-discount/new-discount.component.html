@@ -1,0 +1,82 @@
+<div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Discount</h1>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-center container-fluid">
+                        <form class="w-100 m-3" [formGroup]="newDiscount" (ngSubmit)="onSubmit()">
+                            <div style="margin-bottom: 15px;" class="mb-3 row">
+                                <div class="col-2">
+                                    <label for="categoryName" class="form-label">Name</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" id="categoryName" fdprocessedid="k63lp"
+                                        formControlName="name" />
+                                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !nameValid">
+                                        <sup>*</sup>Please provide discount name
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px;" class="mb-3 row">
+                                <div class="col-2">
+                                    <label for="description" class="form-label">Description</label>
+                                </div>
+                                <div class="col-10">
+                                    <textarea class="form-control" id="description" rows="3"
+                                        formControlName="desc"></textarea>
+                                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !descValid">
+                                        <sup>*</sup>Please provide discount description
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px;" class="mb-3 row">
+                                <div class="col-2">
+                                    <label for="percent" class="form-label">Percent</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="number" class="form-control" id="percent" fdprocessedid="k63lp"
+                                        formControlName="percent" />
+                                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !percentValid">
+                                        <sup>*</sup>Please provide discount percent
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 15px;" class="mb-3 row">
+                                <div class="col-2">
+                                    <label for="active" class="form-label">Active</label>
+                                </div>
+                                <div class="col-10">
+                                    <div class="form-check">
+                                        <input checked class="form-check-input" id="flexRadioDefault1" type="radio" value='true' formControlName="active"
+                                            (change)="radioButtonChangeHandler($event)">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            True
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="flexRadioDefault2" type="radio" value='false' formControlName="active"
+                                            (change)="radioButtonChangeHandler($event)">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            False
+                                        </label>
+                                    </div>
+                                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !activeValid">
+                                        <sup>*</sup>Please provide discount status
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" routerLink="/admin/discounts">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add Discount</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

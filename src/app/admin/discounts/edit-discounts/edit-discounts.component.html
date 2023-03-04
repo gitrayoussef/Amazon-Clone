@@ -1,14 +1,20 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-center container-fluid">
         <form class="w-100 m-3" [formGroup]="editDiscount" (ngSubmit)="onSubmit()">
+            <fieldset class="alert alert-danger" *ngIf="errorMessage">
+                {{errorMessage}}
+            </fieldset>
+            <fieldset class="alert alert-success" *ngIf="successMessage">
+                {{successMessage}}
+            </fieldset>
             <div class="mb-3 row">
                 <div class="col-2">
                     <label for="discountName" class="form-label">Name</label>
                 </div>
                 <div class="col-10">
                     <input type="text" class="form-control" id="discountName" fdprocessedid="k63lp"
-                        formControlName="name" *ngIf="discount" value="{{discount.name}}" />
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !nameValid">
+                        formControlName="name" *ngIf="discount" value="{{discount['attributes'].name}}" />
+                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !nameValid">
                         <sup>*</sup>Please provide discount name
                     </div>
                 </div>
@@ -19,8 +25,8 @@
                 </div>
                 <div class="col-10">
                     <textarea class="form-control" id="description" rows="3" *ngIf="discount"
-                        formControlName="desc">{{discount.desc}}</textarea>
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !descValid">
+                        formControlName="desc">{{discount['attributes'].desc}}</textarea>
+                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !descValid">
                         <sup>*</sup>Please provide discount description
                     </div>
                 </div>
@@ -32,7 +38,7 @@
                 <div class="col-10">
                     <input type="number" class="form-control" id="percent" fdprocessedid="k63lp"
                         formControlName="percent" />
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !percentValid">
+                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !percentValid">
                         <sup>*</sup>Please provide discount percent
                     </div>
                 </div>
@@ -44,19 +50,21 @@
                 <div class="col-10">
                     <div class="form-check">
                         <input checked class="form-check-input" id="flexRadioDefault1" type="radio" value='true'
-                            formControlName="active" (change)="radioButtonChangeHandler($event)"  [checked]="discount && discount['active'] == 'true'">
+                            formControlName="active" (change)="radioButtonChangeHandler($event)"
+                            [checked]="discount && discount['attributes'].active == 1">
                         <label class="form-check-label" for="flexRadioDefault1">
                             True
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" id="flexRadioDefault2" type="radio" value='false'
-                            formControlName="active" (change)="radioButtonChangeHandler($event)"  [checked]="discount && discount['active'] == 'false'">
+                            formControlName="active" (change)="radioButtonChangeHandler($event)"
+                            [checked]="discount && discount['attributes'].active == 0">
                         <label class="form-check-label" for="flexRadioDefault2">
                             False
                         </label>
                     </div>
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !activeValid">
+                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !activeValid">
                         <sup>*</sup>Please provide discount status
                     </div>
                 </div>

@@ -30,6 +30,8 @@ export class ProductsComponent implements OnInit {
   selectedCategory: any;
   filteredDiscounts: any;
   selectedDiscount: any;
+  successMessage: any;
+  errorMessage: any;
   url = 'http://localhost:8000/api/products';
   isNullElement: any;
   filteredProducts: any;
@@ -40,9 +42,6 @@ export class ProductsComponent implements OnInit {
     private router: Router,
     private http: HttpClient
   ) {}
-
-
-
   ngOnInit(): void {
     this.onGetCategories();
     this.onGetDiscounts();
@@ -87,8 +86,6 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
-
-
   valueSelected() {
     this.products = this.filteredProducts;
     this.products = this.products.filter(
@@ -103,31 +100,19 @@ export class ProductsComponent implements OnInit {
       (product: any) =>
       product['attributes'].Discount && product['attributes'].Discount['attributes'].name ==
         this.selectedDiscount
-    );    
-    console.log(this.products);
-    
+    );        
   }
   refreshComponent() {
     this.ngOnInit();
   }
-
-
   onDelete(id: number) {
     this.productService.deleteProduct(id).subscribe({
       next: (response) => {
-        this.toaster.success(
-          'Product have been deleted successfully',
-          'Great Job!',
-          {
-            timeOut: 3000,
-          }
-        );
+        this.successMessage = `Great, Product deleted successfully!`;
         this.ngOnInit();
       },
       error: (error: any) => {
-        this.toaster.error(error.message, 'OOPS!', {
-          timeOut: 3000,
-        });
+        this.errorMessage = `OPPS!! ${error.error.error}`;
       },
     });
   }

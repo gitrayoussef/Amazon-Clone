@@ -1,0 +1,12 @@
+<form lass="w-100 m-3" [formGroup]="loginAdmin" (ngSubmit)="onSubmit()">
+    <div class="mb-3" style="margin-bottom: 15px;">
+        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+        <input formControlName="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+    </div>
+    <div class="mb-3" style="margin-bottom: 15px;">
+        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+        <input type="password" formControlName="password" class="form-control" id="exampleFormControlTextarea1"/>
+    </div>
+    <button class="btn btn-primary">Login</button>
+</form>
+

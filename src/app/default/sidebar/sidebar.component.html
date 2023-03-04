@@ -12,7 +12,7 @@
             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
 
                 <div class="banner-shop">
-                    <a href="#" class="banner-link">
+                    <a routerLink="/categories/1/Electronics/page/1" class="banner-link">
                         <figure><img src="assets/images/shop-banner.jpg" alt=""></figure>
                     </a>
                 </div>
@@ -26,24 +26,17 @@
                         <div class="sort-item orderby ">
                             <select name="orderby" class="use-chosen">
                                 <option value="menu_order" selected="selected">Default sorting</option>
-                                <option value="popularity">Sort by popularity</option>
-                                <option value="rating">Sort by average rating</option>
-                                <option value="date">Sort by newness</option>
-                                <option value="price">Sort by price: low to high</option>
-                                <option value="price-desc">Sort by price: high to low</option>
                             </select>
                         </div>
 
                         <div class="sort-item product-per-page">
                             <select name="post-per-page" class="use-chosen">
                                 <option value="8" selected="selected">8 per page</option>
-                                <option value="12">12 per page</option>
                             </select>
                         </div>
 
                         <div class="change-display-mode">
                             <a href="#" class="grid-mode display-mode active"><i class="fa fa-th"></i>Grid</a>
-                            <a href="#" class="list-mode display-mode"><i class="fa fa-th-list"></i>List</a>
                         </div>
 
                     </div>
@@ -57,13 +50,13 @@
                         <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6" *ngFor="let product of filterProductByPrice">
                             <div class="product product-style-3 equal-elem">
                                 <div class=" product-thumnail">
-                                    <a href="detail.html" title="{{product['attributes'].name}}">
+                                    <a routerLink="/products/{{product['product-id']}}" title="{{product['attributes'].name}}">
                                         <figure><img src="{{product['attributes'].imagepath}}"
                                                 alt="{{product['attributes'].name}}"></figure>
                                     </a>
                                 </div>
                                 <div class="product-info">
-                                    <a href="#" class="product-name"><span>{{product['attributes'].name}}</span></a>
+                                    <a routerLink="/products/{{product['product-id']}}" class="product-name"><span>{{product['attributes'].name}}</span></a>
                                     <ngb-rating [max]="5" [(rate)]="product['attributes'].rating"
                                         [readonly]="true"></ngb-rating>
                                     <div class="wrap-price" *ngIf="product['attributes'].Discount != null">
@@ -140,12 +133,12 @@
                             <li class="product-item" *ngFor="let product of filterProductByRating">
                                 <div class="product product-widget-style">
                                     <div class="thumbnnail">
-                                        <a href="detail.html" title="{{product['attributes'].name}}">
+                                        <a routerLink="/products/{{product['product-id']}}" title="{{product['attributes'].name}}">
                                             <figure><img src="{{product['attributes'].imagepath}}" alt=""></figure>
                                         </a>
                                     </div>
                                     <div class="product-info">
-                                        <a href="#" class="product-name"><span>{{product['attributes'].name}}</span></a>
+                                        <a routerLink="/products/{{product['product-id']}}" class="product-name"><span>{{product['attributes'].name}}</span></a>
                                         <div class="wrap-price" *ngIf="product['attributes'].Discount != null">
                                             <ins>
                                                 <p class="product-price">${{((product['attributes'].price) -

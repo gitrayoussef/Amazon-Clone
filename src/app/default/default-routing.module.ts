@@ -45,6 +45,7 @@ const routes: Routes = [
       {
         path: 'products/:id',
         component: DetailComponent,
+        canActivate: [AfterLoginService]
       }
     ],
   },

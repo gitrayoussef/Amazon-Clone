@@ -1,123 +1,121 @@
 <div class="card card-primary card-outline p-2">
     <div class="card-header">
-        <h3 class="card-title">Search</h3>
-        <div class="w-50 mb-2">
+        <h3 class="card-title" style="margin-right: 15px;">Search</h3>
+        <div class="w-50 mb-2 d-flex">
             <div class="input-group input-group-sm mb-2">
                 <input id="searchProductInput" type="text" class="form-control" placeholder="Search product"
                     fdprocessedid="0gx4l" name="product" [(ngModel)]="searchByProductName">
             </div>
-            <div class="input-group input-group-sm">
-                <input id="searchProductInput" type="text" class="form-control" placeholder="Search by price"
-                    fdprocessedid="0gx4l" name="price" [(ngModel)]="searchByProductPrice">
-            </div>
         </div>
         <div class="input-group input-group-sm mb-3">
-            <span>Select by Category:</span>
+            <span style="margin-right: 15px;">Select by Category:</span>
             <select *ngIf="filteredCategories" [(ngModel)]="selectedCategory" (change)="valueSelected()">
-                <option *ngFor="let category of filteredCategories" [ngValue]="category['attributes'].name"
-                    >
+                <option *ngFor="let category of filteredCategories" [ngValue]="category['attributes'].name">
                     {{category['attributes'].name}}</option>
             </select>
         </div>
         <div class="input-group input-group-sm mb-3">
-            <span>Select by Discount:</span>
+            <span style="margin-right: 15px;">Select by Discount:</span>
             <select *ngIf="filteredDiscounts" [(ngModel)]="selectedDiscount" (change)="valueSelectedDiscount()">
-                <option *ngFor="let discount of filteredDiscounts" [ngValue]="discount['attributes'].name"
-                >
+                <option *ngFor="let discount of filteredDiscounts" [ngValue]="discount['attributes'].name">
                     {{discount['attributes'].name}}</option>
             </select>
         </div>
 
 
-</div>
+    </div>
 
-<div class="card-body p-0">
-    <div class="mailbox-controls">
-        <button type="button" class="btn btn-default btn-sm" fdprocessedid="33yis" data-bs-toggle="modal"
-            data-bs-target="#addModal" routerLink="/admin/products/new">
-            <i class="fa fa-plus-circle me-2"></i>Add New Product
-        </button>
+    <div class="card-body p-0">
+        <div class="mailbox-controls">
+            <button type="button" class="btn btn-default btn-sm" fdprocessedid="33yis" data-bs-toggle="modal"
+                data-bs-target="#addModal" routerLink="/admin/products/new">
+                <i class="fa fa-plus-circle me-2"></i>Add New Product
+            </button>
 
-        <button type="button" class="btn btn-default btn-sm" fdprocessedid="yuhkw">
-            <i class="fas fa-sync-alt" (click)="refreshComponent()"></i>
-        </button>
-        <div class="float-right">
-            1-50/200
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" fdprocessedid="v3f7wo">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm" fdprocessedid="lm75qe">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <button type="button" class="btn btn-default btn-sm" fdprocessedid="yuhkw">
+                <i class="fas fa-sync-alt" (click)="refreshComponent()"></i>
+            </button>
+            <div class="float-right">
+                1-50/200
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" fdprocessedid="v3f7wo">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm" fdprocessedid="lm75qe">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
             </div>
 
         </div>
-
-    </div>
-    <div class="table-responsive mailbox-messages">
-        <table class="table table-hover table-striped">
-            <tbody>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Inventory</th>
-                    <th>Price</th>
-                    <th>Disount</th>
-                    <th>Image</th>
-                    <th>Tools</th>
-                </tr>
-                <tr *ngFor="let product of products | filter : searchByProductName | filter : searchByProductPrice">
-                    <td>{{product['product-id']}}</td>
-                    <td>{{product['attributes'].name}}</td>
-                    <td style="width: 600px;">{{product['attributes'].desc}}</td>
-                    <td>{{product['attributes'].Category['attributes'].name}}</td>
-                    <td>{{product['attributes'].Inventory['attributes'].quantity}}</td>
-                    <td>{{product['attributes'].price}}</td>
-                    <td *ngIf="product['attributes'].Discount; else getNull">
-                        {{product['attributes'].Discount['attributes'].name}}</td>
-                    <ng-template #getNull>
-                        <td>
-                            No Discount
+        <div class="table-responsive mailbox-messages">
+            <fieldset class="alert alert-danger" *ngIf="errorMessage">
+                {{errorMessage}}
+            </fieldset>
+            <fieldset class="alert alert-success" *ngIf="successMessage">
+                {{successMessage}}
+            </fieldset>
+            <table class="table table-hover table-striped">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Inventory</th>
+                        <th>Price</th>
+                        <th>Disount</th>
+                        <th>Image</th>
+                        <th>Tools</th>
+                    </tr>
+                    <tr *ngFor="let product of products | filter : searchByProductName | filter : searchByProductPrice">
+                        <td>{{product['product-id']}}</td>
+                        <td>{{product['attributes'].name}}</td>
+                        <td style="width: 600px;">{{product['attributes'].desc}}</td>
+                        <td>{{product['attributes'].Category['attributes'].name}}</td>
+                        <td>{{product['attributes'].Inventory['attributes'].quantity}}</td>
+                        <td>{{product['attributes'].price}}</td>
+                        <td *ngIf="product['attributes'].Discount; else getNull">
+                            {{product['attributes'].Discount['attributes'].name}}</td>
+                        <ng-template #getNull>
+                            <td>
+                                No Discount
+                            </td>
+                        </ng-template>
+                        <td><img src="{{product['attributes'].imagepath}}" alt="{{product['attributes'].name}}"></td>
+                        <td class="d-flex">
+                            <!-- <a class="btn btn-default btn-sm" fdprocessedid="t404js"
+                                routerLink="/admin/products/{{product['product-id']}}/edit">
+                                <i class="fas fa-edit"></i>
+                            </a> -->
+                            <a class="btn btn-default btn-sm" fdprocessedid="t404js" (click)="onDelete(product['product-id'])">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </td>
-                    </ng-template>
-                    <td><img src="{{product['attributes'].imagepath}}" alt="{{product['attributes'].name}}"></td>
-                    <td class="d-flex">
-                        <a class="btn btn-default btn-sm" fdprocessedid="t404js"
-                            routerLink="/admin/products/{{product.id}}/edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="btn btn-default btn-sm" fdprocessedid="t404js"
-                            routerLink="/admin/products/{{product.id}}/edit">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-</div>
-
-<div class="card-footer p-0">
-    <div class="mailbox-controls">
-        <div class="float-right">
-            1-50/200
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" fdprocessedid="8vgle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm" fdprocessedid="xaeoet">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
 
     </div>
-</div>
-</div>
 
+    <div class="card-footer p-0">
+        <div class="mailbox-controls">
+            <div class="float-right">
+                1-50/200
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" fdprocessedid="8vgle">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm" fdprocessedid="xaeoet">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

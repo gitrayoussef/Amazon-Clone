@@ -7488,3 +7488,17 @@ ngb-rating {
   color: black;
   border-color: red;
 }
+
+.img-magnifier-container {
+  position: relative !important;
+}
+
+.img-magnifier-container:hover .img-magnifier-glass {
+  position: absolute !important;
+  border: 1px solid gainsboro !important;
+  border-radius: 0 !important;
+  cursor: none !important;
+  /*Set the size of the magnifier glass:*/
+  width: 200px !important;
+  height: 200px !important;
+}

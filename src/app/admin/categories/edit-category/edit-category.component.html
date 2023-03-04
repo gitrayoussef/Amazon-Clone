@@ -7,8 +7,8 @@
                 </div>
                 <div class="col-10">
                     <input type="text" class="form-control" id="discountName" fdprocessedid="k63lp" formControlName="name"
-                        *ngIf="category" value="{{category.name}}" />
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !nameValid">
+                        *ngIf="category" value="{{category['attributes'].name}}" />
+                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !nameValid">
                         <sup>*</sup>Please provide category name
                     </div>
                 </div>
@@ -19,25 +19,10 @@
                 </div>
                 <div class="col-10">
                     <textarea class="form-control" id="description" rows="3"
-                    *ngIf="category" formControlName="desc">{{category.desc}}</textarea>
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !descValid">
+                    *ngIf="category" formControlName="desc">{{category['attributes'].desc}}</textarea>
+                    <div style="color: red;" class="bg-danger" *ngIf="isSubmitted && !descValid">
                         <sup>*</sup>Please provide category description
                     </div>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <div class="col-2">
-                    <label for="image" class="form-label">Image</label>
-                </div>
-                <div class="col-8">
-                    <input type="file" class="form-control" aria-label="file example" accept="image/png, image/jpeg"
-                        (change)="onSelectImage($event)" formControlName="image">
-                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !imageValid">
-                        <sup>*</sup>Please provide category image
-                    </div>
-                </div>
-                <div class="col-2">
-                    <img src="assets/img/{{imageName}}" *ngIf="imageName" alt="" srcset="">
                 </div>
             </div>
             <div class="modal-footer">

@@ -108,8 +108,9 @@ export class SidebarComponent implements OnInit {
         this.filterProductByRating.length < 3
       ) {
         this.filterProductByRating.push(product);
-      }
+      }    
     }
+
   }
   getFilterProductByCategory() {
     this.filterProductByCategory = [];

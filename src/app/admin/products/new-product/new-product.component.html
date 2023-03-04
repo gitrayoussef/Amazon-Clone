@@ -1,23 +1,28 @@
 
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <fieldset class="alert alert-danger" *ngIf="errorMessage">
+                {{errorMessage}}
+            </fieldset>
+            <fieldset class="alert alert-success" *ngIf="successMessage">
+                {{successMessage}}
+            </fieldset>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-center container-fluid">
                         <form class="w-100 m-3" [formGroup]="newProduct" (ngSubmit)="onSubmit()">
-                            <div class="mb-3 row">
+                            <div class="mb-3 row gap-4">
                                 <div class="col-2">
                                     <label for="prouctName" class="form-label">Name</label>
                                 </div>
-                                <div class="col-10">
+                                <div style="margin-bottom: 10px;" class="col-10">
                                     <input type="text" class="form-control" id="prouctName" fdprocessedid="k63lp"
                                         formControlName="name" />
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !nameValid">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !nameValid">
                                         <sup>*</sup>Please provide product name
                                     </div>
                                 </div>
@@ -26,11 +31,22 @@
                                 <div class="col-2">
                                     <label for="description" class="form-label">Description</label>
                                 </div>
-                                <div class="col-10">
+                                <div style="margin-bottom: 10px;" class="col-10">
                                     <textarea class="form-control" id="description" rows="3"
                                         formControlName="desc"></textarea>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !descValid">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !descValid">
                                         <sup>*</sup>Please provide product description
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-2">
+                                    <label for="price" class="form-label">Price</label>
+                                </div>
+                                <div style="margin-bottom: 10px;" class="input-group mb-3 col-10">
+                                    <input style="width: 50%;" type="number" class="form-control" formControlName="price">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !priceValid">
+                                        <sup>*</sup>Please provide product price
                                     </div>
                                 </div>
                             </div>
@@ -38,12 +54,12 @@
                                 <div class="col-2">
                                     <label for="category" class="form-label">Category</label>
                                 </div>
-                                <div class="col-10">
-                                    <select class="form-select" formControlName="category">
-                                        <option *ngFor="let category of categories" [ngValue]="category.id">
-                                            {{category.name}}</option>
+                                <div style="margin-bottom: 10px;" class="col-10">
+                                    <select style="width: 50%;" *ngIf="categories" class="form-select" formControlName="category_id">
+                                        <option *ngFor="let category of categories" [ngValue]="category['Category-id']">
+                                            {{category['attributes'].name}}</option>
                                     </select>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !categoryValid">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !categoryValid">
                                         <sup>*</sup>Please provide product category
                                     </div>
                                 </div>
@@ -52,26 +68,13 @@
                                 <div class="col-2">
                                     <label for="inventory" class="form-label">Inventory</label>
                                 </div>
-                                <div class="col-10">
-                                    <select class="form-select" formControlName="inventory">
-                                        <option *ngFor="let inventory of inventories" [ngValue]="inventory.id">
-                                            {{inventory.quantity}}</option>
+                                <div style="margin-bottom: 10px;" class="col-10">
+                                    <select style="width: 50%;" *ngIf="inventories" class="form-select" formControlName="inventory_id">
+                                        <option *ngFor="let inventory of inventories" [ngValue]="inventory['Inventory-id']">
+                                            {{inventory['attributes'].quantity}}</option>
                                     </select>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !inventoryValid">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !inventoryValid">
                                         <sup>*</sup>Please provide product inventory
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-2">
-                                    <label for="price" class="form-label">Price</label>
-                                </div>
-                                <div class="input-group mb-3 col-10">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control" formControlName="price">
-                                    <span class="input-group-text">.00</span>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !priceValid">
-                                        <sup>*</sup>Please provide product price
                                     </div>
                                 </div>
                             </div>
@@ -79,12 +82,12 @@
                                 <div class="col-2">
                                     <label for="discount" class="form-label">Discount</label>
                                 </div>
-                                <div class="col-10">
-                                    <select class="form-select" formControlName="discount">
-                                        <option *ngFor="let discount of discounts" [ngValue]="discount.id">
-                                            {{discount.name}}</option>
+                                <div style="margin-bottom: 10px;" class="col-10 w-100">
+                                    <select style="width: 50%;" *ngIf="discounts" class="form-select" formControlName="discount_id">
+                                        <option *ngFor="let discount of discounts" [ngValue]="discount['Discount-id']">
+                                            {{discount['attributes'].name}}</option>
                                     </select>
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !discountValid">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !discountValid">
                                         <sup>*</sup>Please provide product discount
                                     </div>
                                 </div>
@@ -93,19 +96,19 @@
                                 <div class="col-2">
                                     <label for="image" class="form-label">Image</label>
                                 </div>
-                                <div class="col-8">
-                                    <input type="file" class="form-control" aria-label="file example"
+                                <div  style="margin-bottom: 10px;" class="col-8">
+                                    <input type="file" style="width: 50%;" class="form-control w-100" aria-label="file example"
                                         accept="image/png, image/jpeg" (change)="onSelectImage($event)">
-                                    <div class="bg-gradient-danger" *ngIf="isSubmitted && !imageValid">
+                                    <div style="color:red;" class="bg-danger" *ngIf="isSubmitted && !imageValid">
                                         <sup>*</sup>Please provide product image
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <img src="assets/img/{{imageName}}" *ngIf="imageName" alt="" srcset="">
+                                    <img style="width: 300px;height: 300px;" src="assets/images/products/{{imageName}}" *ngIf="imageName" alt="" srcset="">
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" routerLink="/admin/products">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Add Product</button>
                             </div>
                         </form>

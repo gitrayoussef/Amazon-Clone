@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Category } from 'src/app/interface/category';
 import { Discount } from 'src/app/interface/discount';
 import { Inventory } from 'src/app/interface/inventory';
+import { Login } from 'src/app/interface/login';
 import { Product } from 'src/app/interface/product';
 
 @Injectable({
@@ -11,10 +12,7 @@ import { Product } from 'src/app/interface/product';
 })
 export class ProductService {
   private apiUrl = 'http://localhost:8000';
-  private headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer /* YOUR_TOKEN_HERE */',
-  });
+  private token!: any;
   constructor(private http: HttpClient) {}
 
   // Products Service
@@ -24,84 +22,119 @@ export class ProductService {
   getProduct(id: string | number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products/${id}`);
   }
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(`${this.apiUrl}/products`, product, {
-      headers: this.headers,
+  createProduct(product: any): Observable<any> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
+    return this.http.post<any>(
+      `${this.apiUrl}/api/admin/products/store`,
+      product,
+      {
+        headers: headers,
+      }
+    );
   }
-  updateProduct(id: string | number, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, product, {
-      headers: this.headers,
-    });
-  }
+  // updateProduct(id: string | number, product: any): Observable<any> {
+  //   let headers = new HttpHeaders({
+  //     Authorization: `Bearer ${localStorage.getItem('token')}`
+  //   });
+  //   return this.http.put<any>(`${this.apiUrl}/products/${id}`, product, {
+  //     headers: headers,
+  //   });
+  // }
   deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/products/${id}`);
-  }
-
-  filterByProduct(filter: string) {
-    return this.http.get(`${this.apiUrl}/products/search/${filter}`);
-  }
-
-  filterByCategory(filter: string) {
-    return this.http.get(`${this.apiUrl}/products/search/categories/${filter}`);
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.delete<void>(`${this.apiUrl}/api/admin/products/${id}`, {
+      headers: headers,
+    });
   }
   // Gategories Service
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}/api/categories`);
   }
-  getCategory(id: string | number): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/categories/${id}`);
+  getCategory(id: any): Observable<Category[]> {
+    return this.http.get<any>(`${this.apiUrl}/api/categories/${id}`);
   }
-  createCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(`${this.apiUrl}/categories`, category, {
-      headers: this.headers,
+  createCategory(category: any): Observable<any> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
-  }
-  updateCategory(
-    id: string | number,
-    category: Category
-  ): Observable<Category> {
-    return this.http.put<Category>(
-      `${this.apiUrl}/categories/${id}`,
+    return this.http.post<any>(
+      `${this.apiUrl}/api/admin/categories/store`,
       category,
       {
-        headers: this.headers,
+        headers: headers,
       }
     );
   }
-  deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/categories/${id}`);
+  updateCategory(id: any, category: any): Observable<any> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.put<Category>(
+      `${this.apiUrl}/api/admin/categories/${id}`,
+      category,
+      {
+        headers: headers,
+      }
+    );
+  }
+  deleteCategory(id: any): Observable<void> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.delete<void>(`${this.apiUrl}/api/admin/categories/${id}`, {
+      headers: headers,
+    });
   }
   // Inventories Service
   getInventories(): Observable<Inventory[]> {
-    return this.http.get<Inventory[]>(`${this.apiUrl}/inventories`);
+    return this.http.get<Inventory[]>(`${this.apiUrl}/api/Inventory`);
   }
   createInventory(inventory: Inventory): Observable<Inventory> {
-    return this.http.post<Inventory>(`${this.apiUrl}/inventories`, inventory, {
-      headers: this.headers,
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.post<Inventory>(`${this.apiUrl}/api/Inventory`, inventory, {
+      headers: headers,
     });
   }
   // Discounts Service
-  getDiscounts(): Observable<Discount[]> {
-    return this.http.get<Discount[]>(`${this.apiUrl}/api/Discount`);
+  getDiscounts(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/Discount`);
   }
-  getDiscount(id: string | number): Observable<Discount[]> {
-    return this.http.get<Discount[]>(`${this.apiUrl}/discounts/${id}`);
+  getDiscount(id: any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/Discount/${id}`);
   }
-  createDiscount(discount: Discount): Observable<Discount> {
-    return this.http.post<Discount>(`${this.apiUrl}/discounts`, discount, {
-      headers: this.headers,
+  createDiscount(discount: any): Observable<any> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.post<any>(`${this.apiUrl}/api/Discount`, discount, {
+      headers: headers,
     });
   }
-  updateDiscount(
-    id: string | number,
-    discount: Discount
-  ): Observable<Discount> {
-    return this.http.put<Discount>(`${this.apiUrl}/discounts/${id}`, discount, {
-      headers: this.headers,
+  updateDiscount(id: any, discount: any): Observable<any> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.put<any>(`${this.apiUrl}/api/Discount/${id}`, discount, {
+      headers: headers,
     });
   }
-  deleteDiscount(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/discounts/${id}`);
+  deleteDiscount(id: any): Observable<void> {
+    let headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.delete<void>(`${this.apiUrl}/api/Discount/${id}`, {
+      headers: headers,
+    });
+  }
+
+  // admin login
+  loginAdmin(user: Login): Observable<Login> {
+    return this.http.post<Login>(`${this.apiUrl}/api/admin/login`, user);
   }
 }

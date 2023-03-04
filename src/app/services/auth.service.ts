@@ -6,7 +6,7 @@ import { TokenService } from './token.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(this.tokenService.validLoggedIn);
+  private loggedIn = new BehaviorSubject<boolean>(this.tokenService.validLoggedIn = false);
   authStatus = this.loggedIn.asObservable();
   changeAuthStatus(value:boolean) {
     this.loggedIn.next(value)

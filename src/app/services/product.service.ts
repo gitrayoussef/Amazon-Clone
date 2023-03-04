@@ -12,18 +12,22 @@ import { Product } from 'src/app/interface/product';
 export class ProductService {
   private apiUrl = 'http://localhost:8000';
   subjectNotifier: Subject<any> = new Subject<any>();
+  cartNotifier: Subject<any> = new Subject<any>();
   private _refreshComp = new Subject<void>();
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     // 'Authorization': 'Bearer /* YOUR_TOKEN_HERE */',
   });
   constructor(private http: HttpClient) {}
-  notifyAboutChange(data:any) {
+  notifyAboutChange(data: any) {
     this.subjectNotifier.next(data);
   }
+  notifyAboutCartChange(data: any) {
+    this.cartNotifier.next(data);
+  }
   // Products Service
-  getProduct(id: string | number): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/api/products/${id}`);
+  getProduct(id: any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/products/${id}`);
   }
   filterByProduct(filter: string) {
     return this.http.get(`${this.apiUrl}/api/products/search/${filter}`);
@@ -51,5 +55,23 @@ export class ProductService {
   }
   getDiscount(id: string | number): Observable<Discount[]> {
     return this.http.get<Discount[]>(`${this.apiUrl}/api/Discount/${id}`);
+  }
+  // Reviews
+  getReviews(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/reviews`);
+  }
+  createReviews(review: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/api/reviews/store`, review);
+  }
+  // users
+  getUsers(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/allUsers`);
+  }
+  // carts
+  createCarts(cart: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/api/cart/store`, cart);
+  }
+  getCarts(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/cart`);
   }
 }

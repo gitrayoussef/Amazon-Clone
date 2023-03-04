@@ -15,8 +15,10 @@ export class EditDiscountsComponent implements OnInit {
   isSubmitted = false;
   discountId: number = 0;
   discount!: any;
-  discounts: Discount[] = [];
-  selectedActiveOption: Boolean = false;
+  discounts: any;
+  selectedActiveOption: any;
+  successMessage: any;
+  errorMessage: any;
   editDiscount = this.fb.group({
     name: new FormControl('', [
       Validators.required,
@@ -49,13 +51,20 @@ export class EditDiscountsComponent implements OnInit {
     this.discountId = this.myActivated.snapshot.params['id'];
     this.productService.getDiscount(this.discountId).subscribe({
       next: (response) => {
-        this.discount = response;
-        this.editDiscount.controls['name'].setValue(this.discount['name']);
-        this.editDiscount.controls['desc'].setValue(this.discount['desc']);
-        this.editDiscount.controls['percent'].setValue(
-          this.discount['percent']
+        this.discount = response['data'];
+        this.editDiscount.controls['name'].setValue(
+          this.discount['attributes'].name
         );
-        this.editDiscount.controls['active'].setValue(this.discount['active']);
+        this.editDiscount.controls['desc'].setValue(
+          this.discount['attributes'].desc
+        );
+        this.editDiscount.controls['percent'].setValue(
+          this.discount['attributes'].discount_percent
+        );
+        this.editDiscount.controls['active'].setValue(
+          this.discount['attributes'].active
+        );
+        this.selectedActiveOption = this.discount['attributes'].active;
       },
       error: (error: any) => {
         alert(error.message);
@@ -76,10 +85,10 @@ export class EditDiscountsComponent implements OnInit {
   }
   radioButtonChangeHandler(event: any) {
     let value = event.target.value;
-    if (value === 'true') {
-      this.selectedActiveOption = true;
+    if (value == 'true') {
+      this.selectedActiveOption = 1;
     } else {
-      this.selectedActiveOption = false;
+      this.selectedActiveOption = 0;
     }
   }
 
@@ -92,30 +101,26 @@ export class EditDiscountsComponent implements OnInit {
       newDiscountFormData.append('name', this.editDiscount.get('name')?.value);
       newDiscountFormData.append('desc', this.editDiscount.get('desc')?.value);
       newDiscountFormData.append(
-        'percent',
+        'discount_percent',
         this.editDiscount.get('percent')?.value
       );
       newDiscountFormData.append('active', this.selectedActiveOption);
-          const formDataObj: any = Object.fromEntries(
-            newDiscountFormData.entries()
-          );
-          this.productService.updateDiscount( this.discountId, formDataObj).subscribe({
-            next: (response) => {
-              this.toaster.success(
-                'Discount coupon have been edited successfully',
-                'Great Job!',
-                {
-                  timeOut: 3000,
-                }
-              );
-              this.router.navigate(['admin/discounts']);
-            },
-            error: (error: any) => {
-              this.toaster.error(error.message, 'OOPS!', {
-                timeOut: 3000,
-              });
-            },
-          });
+      const formDataObj: any = Object.fromEntries(
+        newDiscountFormData.entries()
+      );
+      console.log(formDataObj);
+
+      this.productService
+        .updateDiscount(this.discountId, formDataObj)
+        .subscribe({
+          next: (response) => {
+            this.successMessage = `Great, Discount Coupoun deleted successfully!`;
+            this.router.navigate(['admin/discounts']);
+          },
+          error: (error: any) => {
+            this.errorMessage = `OPPS!! ${error.message}`;
+          },
+        });
     }
   }
 }

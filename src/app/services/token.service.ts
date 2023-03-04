@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class TokenService {
-  validLoggedIn: boolean = false;
+  validLoggedIn!: boolean;
   constructor() {}
 
   set(token: string) {

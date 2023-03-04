@@ -43,8 +43,7 @@
                                         <sup>*</sup>Please provide your password
                                     </div>
                                 </fieldset>
-
-                                <fieldset class="wrap-inpu">
+                                <fieldset class="wrap-input">
                                     <!-- <label class="remember-field">
                                         <input class="frm-input " name="rememberme" id="rememberme" value="forever"
                                             type="checkbox"><span>Remember me</span>
@@ -53,7 +52,12 @@
                                     <a class="link-function left-position" [routerLink]="['/forget-password']"
                                         title="Forgotten password?">Forgotten password?</a>
                                 </fieldset>
-                                <input type="submit" class="btn btn-submit" value="Login" name="submit">
+                               
+                                <fieldset class="wrap-input" style="width: 100%;display: flex; flex-direction: column; align-items: center;">
+                                    <input type="submit" class="wrap-input" style="width: 400px;" class="btn btn-submit" value="Login" name="submit">
+                                    <input type="button" (click)="loginGoogle()" style="width: 400px; background-color: #DF2E38;" class="btn btn-submit" value="Login via Google" name="submit">
+                                    <input type="button" (click)="loginFacebook()" style="width: 400px; background-color: #1877F2;" class="btn btn-submit" value="Login via Facebook" name="submit">
+                                </fieldset>
                             </form>
                         </div>
                     </div>

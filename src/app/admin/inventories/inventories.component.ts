@@ -14,10 +14,12 @@ import { Inventory } from 'src/app/interface/inventory';
 })
 export class InventoriesComponent implements OnInit {
   isSubmitted = false;
-  inventories: Inventory[] = [];
-  filteredInventories: Inventory[] = [];
+  inventories: any;
+  filteredInventories: any;
   selectedInventory: any;
   searchInventory!: string;
+  successMessage: any;
+  errorMessage: any;
   constructor(
     private productService: ProductService,
     public fb: FormBuilder,
@@ -35,9 +37,9 @@ export class InventoriesComponent implements OnInit {
   }
   onGetInventories(): void {
     this.productService.getInventories().subscribe({
-      next: (response) => {
-        this.inventories = response;
-        this.filteredInventories = response;
+      next: (response :any) => {
+        this.inventories = response['data'];
+        this.filteredInventories = response['data'];
       },
       error: (error: any) => {
         alert(error.message);
@@ -48,16 +50,12 @@ export class InventoriesComponent implements OnInit {
     return this.newInventory.controls['quantity'].valid;
   }
   valueSelected() {
-    this.productService.getInventories().subscribe({
-      next: (response) => {
-        this.inventories = response.filter(
-          (inventory) => inventory.quantity === this.selectedInventory
-        );
-      },
-      error: (error: any) => {
-        alert(error.message);
-      },
-    });
+    this.inventories = this.filteredInventories;
+    this.inventories = this.filteredInventories.filter(
+      (inventory: any) =>
+       inventory['attributes'].quantity ==
+        this.searchInventory
+    );       
   }
   refreshComponent() {
     this.ngOnInit();
@@ -75,19 +73,11 @@ export class InventoriesComponent implements OnInit {
       );
       this.productService.createInventory(formDataObj).subscribe({
         next: (response) => {
-          this.toaster.success(
-            'Inventory have been created successfully',
-            'Great Job!',
-            {
-              timeOut: 3000,
-            }
-          );
-          this.ngOnInit();
+          this.successMessage = `Great, Inventory Quantity created successfully!`;
+          this.router.navigateByUrl('/admin/products');
         },
         error: (error: any) => {
-          this.toaster.error(error.message, 'OOPS!', {
-            timeOut: 3000,
-          });
+          this.errorMessage = `OPPS!! ${error.message}`;
         },
       });
     }
