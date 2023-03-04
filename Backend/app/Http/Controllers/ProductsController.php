@@ -54,14 +54,16 @@ class ProductsController extends Controller
         $product = Product::create([
             // 'user_id' => Auth::user()->id,
             'name' => $request->name,
+            'rating' => $request->rating,
             'desc' => $request->desc,
             'price' => $request->price,
-            'rating' => $request->rating,
            'category_id' =>$request->category_id,
            'discount_id'=>$request->discount_id,
            'inventory_id'=>$request->inventory_id,
            'image' => $url,
            'imagepath' => env('APP_URL').'/'.$url,
+            
+
         ]);
         
         return new ProductsResource($product);
@@ -128,7 +130,6 @@ class ProductsController extends Controller
             $product->update( [  'name' => $request->name,
             'desc' => $request->desc,
             'price' => $request->price,
-            'rating' =>  $request->rating,
            'category_id' =>$request->category_id,
            'discount_id'=>$request->discount_id,
            'inventory_id'=>$request->inventory_id,

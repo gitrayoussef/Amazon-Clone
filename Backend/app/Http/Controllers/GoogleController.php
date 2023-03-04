@@ -14,28 +14,37 @@ class GoogleController extends Controller
 {
     public function redirect()
     {
-        return Socialite::driver('google')->stateless()->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
-        $googleUser = Socialite::driver('google')->user();
-        dd($googleUser);
-        $user = User::where('email', $googleUser->emil)->first();
-        if (!$user) {
-            $user1=Auth::user();
-            $user1->tokens()->delete();
-            $user1->notify(new LoginNotification());
-            $success['token']=$user1->createToken('user',['user'])->plainTextToken;
-            $success['msg']=$user->name;
-            $success['success']=true;
-            return response()->json($success,200);
-
-        } else {
-            return response()->json([
-                'msg'=>"need to register"
-            ]);
-         
-        } 
+  try{
+    $token = $request->input('access_token');
+    $providerUser = Socialite::driver('google')->stateless()->user();
+    $user = User::where('email',  $providerUser->email)->first();
+    if($user!=null){
+        $user->tokens()->delete();
+        $user->notify(new LoginNotification());
+        $token = $user->createToken('user',['user'])->plainTextToken;
+        return response()->json([
+            'success' => true,
+            'msg' => 'you are logged in now',
+            'token' => $token,
+        ]);
+    }else{
+        return response()->json([
+            'success' => true,
+            'msg' => 'you need to register',
+        ]);
     }
+
+  }catch (Exception $ex) {
+    return response()->json(['status' => 'error', 'expcetion' => $ex->getMessage(), 'msg' => 'failed to get allCarts'], 500);
+}
+
+    
+    }
+        
+    
 }

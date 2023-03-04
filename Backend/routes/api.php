@@ -1,27 +1,31 @@
 <?php
 
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\OrderItemsController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\StripPaymentController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\User\RegisterController;
+use App\Http\Controllers\PaymentDetailsController;
 use App\Http\Controllers\User\ResetPassController;
 use App\Http\Controllers\User\EmailVerfyController;
 use App\Http\Controllers\User\ForgetPassController;
 use App\Http\Controllers\ProductsDiscountController;
 use App\Http\Controllers\ProductsInventoryController;
 use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +48,7 @@ Route::post('password/reset-password',[ResetPassController::class,'passwordReset
 Route::get('admin/Alladmins',[AdminProfileController::class,'profile'])
 ->middleware(['auth:sanctum', 'ability:admin']);
 //user
-Route::get('allUsers',[ProfileController::class,'allUsers'])
-->middleware(['auth:sanctum', 'ability:user,admin']);
+Route::get('allUsers',[ProfileController::class,'allUsers']);
 Route::post('email-verfication',[EmailVerfyController::class,'emaiVerify'])
 ->middleware(['auth:sanctum', 'ability:user,admin']);
 Route::get('email-verfication',[EmailVerfyController::class,'resendEmailVerify'])
@@ -146,6 +149,38 @@ Route::controller(AddressController::class)->group(function(){
 });
 //google
 Route::controller(GoogleController::class)->group(function(){
-    Route::get('google/redirect', 'redirect');
-    Route::get('google/callback', 'callback');
+    Route::get('/google/redirect', 'redirect');
+    Route::get('/google/callback', 'callback');
+});
+
+//order_details
+Route::controller(OrderDetailsController::class)->group(function(){
+Route::get('/orderDetails','index');
+Route::post('/orderDetails/store', 'store');
+Route::get('/orderDetails/show/{order}', 'show');
+Route::put('/orderDetails/update/{order}',  'update');
+Route::delete('/orderDetails/destroy/{order}','destroy');
+});
+//order_items
+Route::controller(OrderItemsController::class)->group(function(){
+    Route::get('/orderItems','index');
+    Route::post('/orderItems/store', 'store');
+    Route::get('/orderItems/show/{order}', 'show');
+    Route::put('/orderItems/update/{order}',  'update');
+    Route::delete('/orderItems/destroy/{order}','destroy');
+    });
+//payment_details
+Route::controller(PaymentDetailsController::class)->group(function(){
+        Route::get('/paymentDetails','index');
+        Route::post('/paymentDetails/store', 'store');
+        Route::get('/paymentDetails/show/{order}', 'show');
+        Route::put('/paymentDetails/update/{order}',  'update');
+        Route::delete('/paymentDetails/destroy/{order}','destroy');
+        });
+
+
+        //facebook
+Route::controller(FacebookController::class)->group(function(){
+    Route::get('/facebook/redirect', 'redirect');
+    Route::get('/facebook/callback', 'callback');
 });
