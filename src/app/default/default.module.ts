@@ -20,6 +20,7 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { DetailComponent } from './detail/detail.component';
+import { ThankyouComponent } from './thankyou/thankyou.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DetailComponent } from './detail/detail.component';
     CartComponent,
     CategoryComponent,
     SidebarComponent,
-    DetailComponent
+    DetailComponent,
+    ThankyouComponent
   ],
   imports: [
     CommonModule,

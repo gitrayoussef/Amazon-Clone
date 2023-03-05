@@ -32,7 +32,6 @@ export class DetailComponent implements OnInit {
   relatedProducts: any = [];
   url = 'http://localhost:8000/api/products';
   itemQuantity!: any;
-  userCart: any = [];
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -214,38 +213,32 @@ export class DetailComponent implements OnInit {
     const formDataObj: any = Object.fromEntries(newCartFormData.entries());
     this.productService.createCarts(formDataObj).subscribe({
       next: (response: any) => {
-        this.ngOnInit();
+        this.afterAddToCart();
       },
     });
-    this.productService.notifyAboutCartChange(this.userCart.length);
+  }
+  afterAddToCart() {
+    this.productService.getCarts().subscribe((response: any) => {
+      let userCart = [];
+      let carts = response['data'];
+      for (const cart of carts) {
+        if (cart.session_id == this.loginService.session.shopping) {
+          userCart.push(cart);
+        }
+      }
+      this.productService.notifyAboutCartChange(userCart.length);
+    });
   }
   increaseItems() {
     let itemQuantity = this.addToCartForm.get('quantity')?.value;
-    this.userCart = [];
     if (itemQuantity) {
       this.addToCartForm.controls['quantity'].setValue(itemQuantity + 1);
-      this.productService.getCarts().subscribe((response: any) => {
-        let carts = response['data'];
-        for (const cart of carts) {
-          if (cart.session_id == this.loginService.session.shopping) {
-            this.userCart.push(cart);
-          }
-        }
-      });
     }
   }
   decreaseItems() {
     let itemQuantity = this.addToCartForm.get('quantity')?.value;
     if (itemQuantity) {
       this.addToCartForm.controls['quantity'].setValue(itemQuantity - 1);
-      this.productService.getCarts().subscribe((response: any) => {
-        let carts = response['data'];
-        for (const cart of carts) {
-          if (cart.session_id == this.loginService.session.shopping) {
-            this.userCart.pull(cart);
-          }
-        }
-      });
     }
   }
 }

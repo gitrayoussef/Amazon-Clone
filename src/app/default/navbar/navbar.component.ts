@@ -13,15 +13,12 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit {
   public loggedIn!: boolean;
   public categories: any = [];
+  public discounts: any = [];
   public filteredCategories: any = [];
-  public cartItems:any;
+  public cartItems:any = 0;
   notifierSubscription: Subscription =
   this.productService.cartNotifier.subscribe((notified) => {
    this.cartItems = notified;
-   console.log(this.cartItems);
-  console.log(notified);
-  
-   
   });
 
   constructor(
@@ -42,6 +39,7 @@ export class NavbarComponent implements OnInit {
     this.tokenService.delete();
     this.authService.changeAuthStatus(false);
     this.tokenService.validLoggedIn = false;
+    this.cartItems = 0
     this.router.navigateByUrl('/login');
   }
 
@@ -56,6 +54,7 @@ export class NavbarComponent implements OnInit {
       },
     });
   }
+
 
   valueSelected(categoryId: any, categoryName: any) {
     this.router.navigateByUrl(

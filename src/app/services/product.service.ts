@@ -11,6 +11,7 @@ import { Product } from 'src/app/interface/product';
 })
 export class ProductService {
   private apiUrl = 'http://localhost:8000';
+  order_id: any;
   subjectNotifier: Subject<any> = new Subject<any>();
   cartNotifier: Subject<any> = new Subject<any>();
   private _refreshComp = new Subject<void>();
@@ -73,5 +74,28 @@ export class ProductService {
   }
   getCarts(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/api/cart`);
+  }
+  deleteCarts(cartId: any): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/api/cart/destroy/${cartId}`);
+  }
+  // orders
+  getOrder(orderId: any) {
+    return this.http.get<any>(
+      `${this.apiUrl}/api/orderDetails/show/${orderId}`
+    );
+  }
+  createOrder(order: any) {
+    return this.http.post<any>(`${this.apiUrl}/api/orderDetails/store`, order);
+  }
+  createOrderItems(order: any) {
+    return this.http.post<any>(`${this.apiUrl}/api/orderItems/store`, order);
+  }
+  //  order ADDRSS
+  storeAddress(address: any) {
+    return this.http.post<any>(`${this.apiUrl}/api/address/store`, address);
+  }
+  // stripe
+  stripe(stripeaccount: any) {
+    return this.http.post<any>(`${this.apiUrl}/api/stripe`, stripeaccount);
   }
 }
