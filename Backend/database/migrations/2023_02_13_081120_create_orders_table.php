@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->decimal('total');
-            $table->integer('payment_id');
+            $table->integer('payment_id')->nullable();
             $table->timestamps();
         });
     }
