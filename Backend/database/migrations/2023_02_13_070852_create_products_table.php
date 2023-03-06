@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('inventory_id')->constrained('product_inventories');
             $table->decimal('price');
             $table->integer('rating');
-            $table->foreignId('discount_id')->constrained('discounts')->nullable();
+            $table->foreignId('discount_id')->nullable()->constrained('discounts')->nullable();
             $table->timestamps();
         });
     }

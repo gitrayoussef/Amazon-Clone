@@ -198,7 +198,8 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,   
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class
     ],
 
     /*

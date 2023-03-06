@@ -2,24 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Discount;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductsDiscountRequest;
 use App\Http\Resources\ProductsDiscountResource;
-use App\Http\Controllers\ProductsDiscountController;
 
-use HttpResponses;
 class ProductsDiscountController extends Controller
 {
    
     public function index()
     {
-       
-        return ProductsDiscountResource::collection(
-            Discount::all()
-            
-        );
-        // return $this->error('', 'Credentials do not match', 401);
+
+        try {
+            $allDiscount = ProductsDiscountResource::collection(
+                Discount::all()
+          );
+            if ($allDiscount!= null) {
+                return response()->json([
+                    'status' => 'true',
+                    'data' => $allDiscount,
+                ], 201);
+            } else {
+                return response()->json([
+                    'status' => 'true',
+                    'msg' => 'there is no Discount  now '
+                ],201);
+            }
+        } catch (Exception $ex) {
+            return response()->json(['status' => 'error', 'expcetion' => $ex->getMessage(), 'msg' => 'failed to get Discount '], 500);
+        }
+
+
+        
     }
 
   
@@ -37,21 +52,34 @@ class ProductsDiscountController extends Controller
           
            
         ]);
-        // return $this->success([
+    
             return response()->json("success",200);
         return new ProductsDiscountResource($Discount);}
   
 
 
     public function show(Request $Discount,$id)
-    {       $Discount=Discount::find($id);
-        return new ProductsDiscountResource($Discount);
+
+    {     
+        
+        try{
+            $Discount=Discount::find($id);
+            if( $Discount!=null){
+                return new ProductsDiscountResource($Discount);
+            }else{
+                return response()->json([
+                    'status' => 'true',
+                    'msg' => 'no records with this id ,please check id ! '
+                ],201);
+            }  
+        }catch (Exception $ex) {
+            return response()->json(['status' => 'error', 'expcetion' => $ex->getMessage(), 'msg' => 'view process failed'], 500);
+        }
+        
+        
 
     }
   
-   
-
-      
 
      public function update($id,ProductsDiscountRequest $request)
      {

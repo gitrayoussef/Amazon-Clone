@@ -2,38 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Product;
+
+
+
 use App\Models\Inventroy;
-
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ProductsInventoryResource;
 
 class ProductsInventoryController extends Controller
 {
-    /**use HttpResponses;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
-        return  ProductsInventoryResource::collection(
-            Inventroy::all()
-        );
+
+
+        try {
+            $allInventroy= ProductsInventoryResource::collection(
+                Inventroy::all()
+          );
+            if ($allInventroy!= null) {
+                return response()->json([
+                    'status' => 'true',
+                    'data' => $allInventroy,
+                ], 201);
+            } else {
+                return response()->json([
+                    'status' => 'true',
+                    'msg' => 'there is no reviews now '
+                ],201);
+            }
+        } catch (Exception $ex) {
+            return response()->json(['status' => 'error', 'expcetion' => $ex->getMessage(), 'msg' => 'failed to get reviews'], 500);
+        }
+    
     }
     
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store( Request $request)
     {
         // $request->validated($request->all());
@@ -69,18 +77,27 @@ class ProductsInventoryController extends Controller
         return new ProductsInventoryResource($Inventroy);
     }
     }
-    /**
-     * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
+   
    
     public function show( Request $Inventroy,$id)
     {
 
-        $Inventroy=Inventroy::find($id);
-        return  new ProductsInventoryResource($Inventroy);
+
+        try{
+            $Inventroy=Inventroy::find($id);
+            if($Inventroy!=null){
+                return  new   ProductsInventoryResource($Inventroy);
+            }else{
+                return response()->json([
+                    'status' => 'true',
+                    'msg' => 'no records with this id ,please check id ! '
+                ],201);
+            }  
+        }catch (Exception $ex) {
+            return response()->json(['status' => 'error', 'expcetion' => $ex->getMessage(), 'msg' => 'view process failed'], 500);
+        }
+
+
 
     }
 
@@ -101,7 +118,6 @@ class ProductsInventoryController extends Controller
 
     public function search($name)
     {    
-       
     
         if ($name) {
             return Inventroy:: Where('id',$name)->get();
@@ -110,12 +126,6 @@ class ProductsInventoryController extends Controller
     
        
      }
-
-
-
-
-
-
 
 
 

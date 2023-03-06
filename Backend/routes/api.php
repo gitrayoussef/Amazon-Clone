@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AddressController;
@@ -48,7 +49,8 @@ Route::post('password/reset-password',[ResetPassController::class,'passwordReset
 Route::get('admin/Alladmins',[AdminProfileController::class,'profile'])
 ->middleware(['auth:sanctum', 'ability:admin']);
 //user
-Route::get('allUsers',[ProfileController::class,'allUsers']);
+Route::get('allUsers',[ProfileController::class,'allUsers'])
+->middleware(['auth:sanctum', 'ability:user,admin']);
 Route::post('email-verfication',[EmailVerfyController::class,'emaiVerify'])
 ->middleware(['auth:sanctum', 'ability:user,admin']);
 Route::get('email-verfication',[EmailVerfyController::class,'resendEmailVerify'])
@@ -66,8 +68,8 @@ Route::put('admin/products/{products}', 'update')->middleware(['auth:sanctum', '
 Route::delete('admin/products/{products}',  'destroy')->middleware(['auth:sanctum', 'ability:admin']);
 });
 
-
-
+//upload_image
+Route::post('/upload', [ImageController::class, 'upload']);
 
 
 //categories
@@ -124,12 +126,6 @@ Route::delete('/cart/destroy/{cart}', 'destroy');
 //payment stripe
 Route::post('stripe',[StripPaymentController::class,'paymentStripe']);
 
-//paymen paypal
-Route::controller(PaypalPaymentController::class)->group(function(){
-    Route::post('paypal-payment','paymentPaypal');
-    Route::get('paypal-cancel','cancelPaymentPaypal');
-    Route::get('paypal-success','successPaymentPaypal');
-});
 
 //review
 Route::controller(ReviewController::class)->group(function(){
@@ -183,4 +179,12 @@ Route::controller(PaymentDetailsController::class)->group(function(){
 Route::controller(FacebookController::class)->group(function(){
     Route::get('/facebook/redirect', 'redirect');
     Route::get('/facebook/callback', 'callback');
+});
+
+
+//paypal payment
+Route::controller(PaypalPaymentController::class)->group(function(){
+    Route::get('paypal/payment','payment');
+    Route::get('paypal/cancel', 'cancel');
+    Route::get('paypal/success', 'success');  
 });

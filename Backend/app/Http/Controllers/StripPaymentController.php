@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StripPaymentRequest;
+use App\Models\Payment;
 use Exception;
-use Strip;
 use Stripe\Stripe;
 
 class StripPaymentController extends Controller
